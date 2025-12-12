@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mike Filip - Coaching</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-gold-300: rgba(212, 175, 55, 1);
+            --color-gold-500: rgba(184, 134, 11, 1);
+            --color-yellow-300: rgba(238, 232, 170, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --font-family-serif: 'Cinzel', serif;
+            --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: var(--color-cream-50);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(50, 184, 198, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(33, 128, 141, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .dna-strand {
+            position: fixed;
+            width: 200px;
+            height: 100%;
+            opacity: 0.03;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .dna-strand.left {
+            left: 5%;
+            top: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .dna-strand.right {
+            right: 5%;
+            top: 0;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        h1 {
+            font-family: var(--font-family-serif);
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            color: var(--color-gold-300);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-family: var(--font-family-serif);
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            color: var(--color-yellow-300);
+            text-transform: uppercase;
+        }
+
+        .hero-section {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            padding: 60px 40px;
+            margin: 40px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-text-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-text {
+            font-family: var(--font-family-serif);
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-image {
+            flex: 0 0 auto;
+            width: auto;
+            height: auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            max-width: 350px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column-reverse;
+                gap: 30px;
+                padding: 40px 20px;
+            }
+
+            .hero-image {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: var(--color-gold-500);
+            color: var(--color-slate-900);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
+            letter-spacing: 0.05em;
+        }
+
+        .cta-button:hover {
+            background: var(--color-gold-300);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .section {
+            margin: 80px 0;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        h2 {
+            font-family: var(--font-family-serif);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--color-gold-300);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            font-family: var(--font-family-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--color-cream-50);
+            letter-spacing: 0.05em;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+        }
+
+        .packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .package-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(50, 184, 198, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .package-card:hover:not(.flipped) {
+            transform: translateY(-5px);
+            border-color: var(--color-gold-300);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .package-title {
+            font-family: var(--font-family-serif);
+            font-size: 1.4rem;
+            color: var(--color-gold-300);
+            margin-bottom: 10px;
+            letter-spacing: 0.05em;
+        }
+
+        .package-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-cream-50);
+            margin-bottom: 20px;
+        }
+
+        .package-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .package-features li {
+            padding: 4px 0;
+            color: rgba(255, 255, 255, 0.8);
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .package-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--color-gold-300);
+            font-weight: bold;
+        }
+
+        .package-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(50, 184, 198, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-gold-300);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 40px 20px;
+            }
+            
+            .packages {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <svg class="dna-strand left" viewBox="0 0 100 800">
+        <path d="M20,0 Q40,100 20,200 Q0,300 20,400 Q40,500 20,600 Q0,700 20,800" 
+              fill="none" stroke="rgba(50, 184, 198, 0.3)" stroke-width="2"/>
+        <path d="M80,0 Q60,100 80,200 Q100,300 80,400 Q60,500 80,600 Q100,700 80,800" 
+              fill="none" stroke="rgba(50, 184, 198, 0.3)" stroke-width="2"/>
+    </svg>
+    
+    <svg class="dna-strand right" viewBox="0 0 100 800">
+        <path d="M20,0 Q40,100 20,200 Q0,300 20,400 Q40,500 20,600 Q0,700 20,800" 
+              fill="none" stroke="rgba(33, 128, 141, 0.3)" stroke-width="2"/>
+        <path d="M80,0 Q60,100 80,200 Q100,300 80,400 Q60,500 80,600 Q100,700 80,800" 
+              fill="none" stroke="rgba(33, 128, 141, 0.3)" stroke-width="2"/>
+    </svg>
+
+    <div class="container">
+        <header>
+            <h1>Mike Filip</h1>
+            <div class="subtitle">Coaching</div>
+        </header>
+
+        <section class="hero-section">
+            <div class="hero-text-content">
+                <p class="hero-text">
+                    Jeżeli szukasz osoby, która przez ostatnią dekadę traktowała trening, zdrowie i optymalizację organizmu nie jako hobby, ale jako własny projekt badawczy – dobrze trafiłeś.<br><br>
+                    Sprawdź co możemy razem osiągnąć!
+                </p>
+            </div>
+            <div class="hero-image">
+                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/fb506a48-f51b-48f4-b071-2e4d84dafa8b" alt="Mike Filip">
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Kilka słów o mnie</h2>
+            
+            <p>Nie jestem teoretykiem. Od 10 lat nieprzerwanie trenuję siłowo i stosuję zaawansowaną suplementację, traktując własny organizm jak główny projekt badawczy. Nie buduję formy "na lato" – utrzymuję ją systemowo przez całą dekadę. Dzięki temu mój poziom tkanki tłuszczowej (BF) rzadko kiedy przekracza 13%, a parametry zdrowotne i energetyczne są zoptymalizowane pod kątem maksymalnej wydajności. Maksymalizuję swoją wydajność, siłę, sprawność umysłową i układ hormonalny jednocześnie, bez sztywnych reguł czy restrykcyjnych diet. Trening, suplementacja i kilka prostych zasad żywieniowych – to wszystko, co potrzebuję.</p>
+
+            <p>Jestem magistrem inżynierem i choć moje wykształcenie nie jest związane z fitnessem, to właśnie ono daje mi przewagę. Nauki techniczne nauczyły mnie myśleć analitycznie: weryfikować dane, testować hipotezy i wyciągać wnioski na podstawie faktów, a nie marketingowych sloganów. Ten inżynierski warsztat pozwala mi precyzyjnie oddzielić to, co faktycznie działa na ludzki organizm, od tego, co jest tylko modą.</p>
+
+            <p>Nigdy nie ukończyłem kursów trenerskich – wiedzę zdobyłem sam. O ile wierzę, że szkolenia mogą być pomocne, tak w moim przypadku żaden dyplom nie zastąpi dekady praktyki, analizy badań i testowania rozwiązań na "żywym organizmie". Oferuję Ci wiedzę popartą 10-letnim doświadczeniem praktycznym i wynikami, których nie znajdziesz u większości trenerów po weekendowych kursach.</p>
+        </section>
+
+        <section class="section">
+            <h2>Co mogę zaoferować</h2>
+            
+            <div>
+                <h3>Trening</h3>
+                <p>Aby trening faktycznie przyniósł wszystkie korzyści, nie może składać się jedynie z podskoków i robienia brzuszków, bądź jedynie wyciskania na ławce i robienia przysiadów. Mój program łączy bloki siłowe, wytrzymałościowe, trening funkcjonalny oraz elementy intensywnego cardio. Każda z tych składowych pełni inną rolę: trening siłowy buduje mięśnie i hormony, cardio wzmacnia serce i umysł, trening funkcjonalny uczy Twoje ciało poruszać się pod obciążeniem w rzeczywistych warunkach.</p>
+
+                <p>Ruch to fundamentalna potrzeba naszej biologii. Ludzie ewoluowali jako wytrwali biegacze i dźwigacze – bez ruchu oznaczało śmierć. Zapominamy, że gdy zaniedbujemy ruch, degendrujemy się. Choroby serca, cukrzyca, słaby umysł – to cena inaktywności.</p>
+
+                <p>Nie bój się, tego wcale nie jest tak dużo! Trzy solidne treningi siłowe połączone z ćwiczeniami funkcjonalnymi, jedna bądź dwie sesje wytrzymałościowe oraz ok 30 minut intensywnego cardio to wszystko czego będziesz potrzebować w tygodniu. To inwestycja, która zwraca się wielokrotnie – nie tylko w wyglądzie, ale w energii, jasności umysłu i długości Twojego życia.</p>
+
+                <h3>Dieta</h3>
+                <p>Dieta nie musi być restrykcyjna. Nie musisz liczyć każdej kalorii ani odmawiać sobie pizzy czy sernika do końca życia. Ale trzeba podejść do tego z głową. Zacznijmy od podstaw: zrozumienia, że produkty różnią się gęstością kaloryczną, sprawdzenia czy Twój organizm dobrze radzi sobie z węglowodanami i upewnienia się, że nie brakuje Ci kluczowych składników odżywczych. To nie rocket science – to świadome wybory.</p>
+
+                <p>Jedzenie to jedna z największych przyjemności życia i dieta nie powinna Ci jej odbierać. Sam nie trzymam restrykcyjnego planu, nie liczę kalorii i nie odmawiam sobie kebaba, ciasta od czasu do czasu, czy nawet chipsów z żoną przed telewizorem w weekend. Wystarczy kilka prostych zasad, których się trzymasz, plus świadome wplecenie zdrowych produktów do codziennego jedzenia. Tyle. Żadnych cudów, żadnych wyrzeczeń na całe życie. Pozwól, że i Tobie pokażę jak to zrobić.</p>
+
+                <h3>Suplementacja</h3>
+                <p>Wielu ekspertów twierdzi, że suplementy nie są potrzebne. Mają w tym trochę racji – można żyć bez nich i funkcjonować na przyzwoitym poziomie. Ale ja nigdy nie chciałem 'przyzwoitego' życia. Mam je tylko jedno i chcę wycisnąć z niego absolutne maksimum. Problem w tym, że większość z nas nie ma całego dnia dla siebie. Pracujemy, mamy rodziny, obowiązki, życie. Nawet jeśli starasz się żyć zdrowo, rzeczywistość i tak Cię dopadnie – pizza z kumplami, piwo w weekend, długie godziny przed komputerem, choroba. A do tego świat wokół nas aktywnie sabotuje Twoje zdrowie: testosteron u mężczyzn spada każdego roku, nowotwory pojawiają się u coraz młodszych ludzi, a mikroplastik i toksyny są wszędzie. Suplementacja to nie dodatek – to sposób na wypełnienie luki między tym, co realne, a tym, co optymalne. To narzędzie, które pozwala mi osiągać maksymalne efekty bez siedzenia na siłowni po 2 godziny dziennie, liczenia każdej kalorii czy jedzenia wyłącznie organicznych produktów. To inteligentna optymalizacja, a nie droga na skróty dla leniwych.</p>
+
+                <p>Mimo że jestem orędownikiem suplementacji, trzeba podejść do niej rozsądnie. Większość ludzi kupuje cokolwiek, co ma ładną etykietę bądź ufa reklamom, nie rozumiejąc, czego ich organizm naprawdę potrzebuje. U mnie suplementacja zawsze wynika z konkretnej potrzeby – poparta analizą Twojej sytuacji, doborem najlepszych dostępnych produktów oraz wskazaniem właściwego dawkowania i pory. 90% suplementów dostępnych w sklepach nie przechodzi mojej selekcji – Ty dostajesz tylko to, co faktycznie działa i co realnie wpłynie na Twoje wyniki.</p>
+
+                <h3>Inne aspekty</h3>
+                <p>Jeśli będziesz chciał, pomogę Ci zoptymalizować także inne kluczowe sfery życia: sen, układ hormonalny, pracę mózgu czy sprawność seksualną. To elementy, które zawsze były dla mnie fundamentalne w dążeniu do perfekcji. Ze względu na charakter mojej pracy, od lat obsesyjnie maksymalizuję swoje funkcje poznawcze i produktywność – mój umysł musi być zawsze gotowy do działania, a pamięć niezawodna. Przez lata znalazłem skuteczne mechanizmy, aby te funkcje trwale poprawić, ale co ważniejsze, wypracowałem sprawdzone, doraźne sposoby na momentalną poprawę "jasności umysłu" w sytuacjach kryzysowych, takich jak ważne spotkanie, nawał pracy czy zbliżający się deadline. Podobnie podchodzę do sprawności seksualnej. Libido, erekcja i wytrzymałość to bezpośrednie odzwierciedlenie Twojego zdrowia hormonalnego, układu krążenia i ogólnej kondycji, ale to wcale nie oznacza, że nie można tym parametrom jeszcze bardziej, a przede wszystkim bezpiecznie, pomóc.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Pakiety</h2>
+            <div class="packages">
+                <div class="package-card">
+                    <div class="package-title">Plan START</div>
+                    <div class="package-price">800 zł</div>
+                    <ul class="package-features">
+                        <li>Pełna opieka przez 4 tygodnie</li>
+                        <li>Konsultacja startowa 60-90 min</li>
+                        <li>2 treningi personalne (nauka techniki)</li>
+                        <li>Indywidualny plan treningowy</li>
+                        <li>Plan żywieniowy</li>
+                        <li>Podstawowy plan suplementacji</li>
+                        <li>Stały kontakt i monitorowanie</li>
+                        <li>Do dwóch korekt treningu</li>
+                    </ul>
+                </div>
+
+                <div class="package-card">
+                    <div class="package-title">Plan PROGRESS</div>
+                    <div class="package-price">1500 zł</div>
+                    <ul class="package-features">
+                        <li>Pełna opieka przez 8 tygodni</li>
+                        <li>Konsultacja startowa 60-90 min</li>
+                        <li>5 treningów personalnych</li>
+                        <li>Indywidualny plan treningowy</li>
+                        <li>Plan żywieniowy</li>
+                        <li>Podstawowy plan suplementacji</li>
+                        <li>Dodatkowa konsultacja po 4 tygodniach 60-90 min</li>
+                        <li>Stały kontakt i monitorowanie</li>
+                        <li>Do trzech korekt treningu</li>
+                    </ul>
+                </div>
+
+                <div class="package-card">
+                    <div class="package-title">Plan METAMORFOZA</div>
+                    <div class="package-price">2800 zł</div>
+                    <ul class="package-features">
+                        <li>Pełna opieka przez 12 tygodni</li>
+                        <li>Konsultacja startowa 60-90 min</li>
+                        <li>8 treningów personalnych</li>
+                        <li>Indywidualny plan treningowy</li>
+                        <li>Plan żywieniowy</li>
+                        <li>Podstawowy plan suplementacji</li>
+                        <li>Dodatkowa konsultacja po 4 i 8 tygodniach 60-90 min</li>
+                        <li>Stały kontakt i monitorowanie</li>
+                        <li>Do czterech korekt treningu</li>
+                        <li>+Redukcja 2.0 GRATIS</li>
+                    </ul>
+                </div>
+
+                <div class="package-card">
+                    <div class="package-title">Współpraca Długoterminowa</div>
+                    <div class="package-price">500 zł/miesiąc</div>
+                    <ul class="package-features">
+                        <li>Tylko dla osób które ukończyły przynajmniej Plan START</li>
+                    </ul>
+                </div>
+
+                <div class="package-card">
+                    <div class="package-title">Redukcja 2.0</div>
+                    <div class="package-price">1000 zł</div>
+                    <ul class="package-features">
+                        <li>Tylko dla osób które ukończyły przynajmniej Plan START</li>
+                        <li>Szczegółowy plan żywieniowy w celu stracenia masy tłuszczowej</li>
+                        <li>Ścisła współpraca</li>
+                        <li>Dostosowanie planu treningowego</li>
+                        <li>Plan niezbędnej suplementacji</li>
+                    </ul>
+                </div>
+
+                <div class="package-card">
+                    <div class="package-title">Metabolizm 2.0</div>
+                    <div class="package-price">1200 zł</div>
+                    <ul class="package-features">
+                        <li>Konsultacja startowa 60-90 min</li>
+                        <li>Głęboka analiza historii zdrowotnej</li>
+                        <li>Wskazanie i szczegółowa analiza badań laboratoryjnych</li>
+                        <li>Zaawansowany plan suplementacji</li>
+                        <li>Integracja z podstawową suplementacją</li>
+                        <li>Rekomendacje biohackingu</li>
+                    </ul>
+                </div>
+
+                <div class="package-card">
+                    <div class="package-title">Dodatkowy Trening</div>
+                    <div class="package-price">250 zł</div>
+                    <ul class="package-features">
+                        <li>Za każdy dodatkowy trening poza pakietem</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; font-style: italic; margin-top: 40px; margin-bottom: 0; font-size: 0.95rem;">Oferta przygotowana dla klientów z Trójmiasta i okolic</p>
+        </section>
+
+        <section class="section">
+            <h2>Moja specjalizacja</h2>
+            <p>Jeśli Twoim celem jest scena kulturystyczna, ekstremalna masa mięśniowa lub bicie rekordów w trójboju siłowym – to nie jestem trenerem dla Ciebie. Moja specjalizacja to sylwetka atletyczna, proporcjonalna, szczupła i estetyczna – Hollywood type. Taka, która świetnie wygląda w garniturze i jeszcze lepiej bez niego. Równie ważnym celem jest optymalizacja Twojego zdrowia i poziomu energii. Odzyskasz wigor, poprawisz koncentrację i poczujesz się 10 lat młodszy.</p>
+
+            <p>Moja oferta skierowana jest do osób wymagających, często zapracowanych, które nie mogą pozwolić sobie na spędzanie połowy życia na siłowni. Rozwiązuję problemy braku czasu, stresu, spadków energii i sylwetki typu "skinny-fat". Daję Ci system, który jest skuteczny, logiczny i dopasowany do Twojego stylu życia.</p>
+
+            <p>Choć moja komunikacja jest często męska i techniczna, w swojej karierze z sukcesami prowadziłem również kobiety. Jeżeli czujesz, że możemy się dogadać – skontaktuj się ze mną. Zobaczymy, co będziemy w stanie razem osiągnąć.</p>
+        </section>
+
+        <section class="section" id="kontakt">
+            <h2>Umów darmową rozmowę</h2>
+            <p style="text-align: center; font-size: 1.2rem;">
+                Sprawdźmy czy do siebie pasujemy. Zadzwoń lub napisz do mnie. Umówimy się na krótką i niezobowiązującą rozmowę online, po której zdecydujesz czy chcesz nawiązać współpracę.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2>Czym jest Metabolizm 2.0</h2>
+            
+            <p>Żyjemy w systemie, który nie do końca nastawiony jest na ludzkie zdrowie i dobrobyt. Rynek suplementów zalewa nas reklamami o magicznych pigułkach, ale nikt nam nie mówi, że większość z nich to tandetne formuły z minimalną przyswajalnością i śmieszną dawką. Niewiele osób wie, że może oddać krew w prywatnym laboratorium i zbadać się tak głęboko, jak chce. To nie jest teoria – to system, który zarabia na tym, że jesteśmy chorzy, nie gdy czujemy się dobrze.</p>
+
+            <p>Gdy pójdziesz do lekarza w wieku 35 lat i powiesz, że nie czujesz się już tak dobrze jak kiedyś, usłyszysz: "No cóż, nie ma pan już 20 lat". Ewentualnie jeżeli Twój stan psychiczny będzie na prawdę w złym stanie przepisze Ci Zoloft który Cię ogłupi i sprawi, że do końca życia będziesz musiał brać Viagrę. Nikt nie przepisze Ci badań na testosteron, aby sprawdzić czy jest w normie. Niestety, lekarze uczą się leczyć chorych, nie optymalizować zdrowie ambitnych ludzi, którzy chcą wycisnąć 110% z własnego ciała. To nie ich zawód. Jeśli naprawdę chcesz zadbać o swoje zdrowie i samopoczucie i nie godzisz się na standardowe "życie bez energii", to musisz wziąć sprawy w swoje ręce.</p>
+
+            <p>Metabolizm 2.0 to plan działania dla ludzi, którzy gotowi są odkryć, jakie są rzeczywiste parametry ich organizmu i co trzeba zmienić, żeby ponownie poczuć się jak 20 latek. To rozłożony plan działania, a nie chaotyczne suplementowanie na oślep. Zaczynamy od fundamentów, gdzie zbadasz swój organizm, zidentyfikujesz niedobory minerałów i witamin, a następnie je uzupełnisz. To podstawa. Dobrze "odżywiony" organizm sam zaczyna się regenerować. Następnie zajmiemy się Twoim zdrowiem hormonalnym, bo to właśnie one decydują o Twojej sile, libido, rozprowadzeniu tkanki tłuszczowej i samopoczuciu. Zaraz po tym zajmiemy się optymalizacją funkcji metabolicznych, a na koniec po załataniu już wszystkich dziur wchodzimy na wyższy poziom. Tutaj pokażę Ci jak "wyjść poza schemat": wsparcie mitochondrialne, peptydy przyspieszające regenerację i poprawiające wyniki sportowe oraz nootropiki wspomagające pracę Twojego mózgu. To plan dla ludzi, którzy nie chcą "normalności", ale pragną być najlepszą wersją siebie.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Mike Filip Coaching. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+</body>
+</html>
