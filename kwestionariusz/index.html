@@ -1990,250 +1990,84 @@
             }
 
             const data = getFormData();
-            
-            // Prompt for email address
-            const userEmail = prompt('Podaj swój adres email, aby otrzymać PDF ze zgłoszeniem:');
-            if (!userEmail) {
-                return; // User cancelled
-            }
+            const userEmail = document.getElementById('firstName').value; // Will be used for _replyto
 
-            // Validate email format
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(userEmail)) {
-                alert('Proszę podać prawidłowy adres email');
-                return;
-            }
+            // Submit form to FormSubmit via standard form submission
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://formsubmit.co/mikefilip.coach@gmail.com';
+            form.style.display = 'none';
 
-            // Generate PDF and send
-            generateAndSendPDF(data, userEmail);
-        }
-
-        function generateAndSendPDF(data, userEmail) {
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF();
-            let yPosition = 10;
-
-            // Helper function to add text with wrapping
-            const addText = (text, x, y, fontSize = 10, maxWidth = 190) => {
-                pdf.setFontSize(fontSize);
-                const lines = pdf.splitTextToSize(text, maxWidth);
-                pdf.text(lines, x, y);
-                return y + (lines.length * 5);
+            // Add all fields as hidden inputs
+            const addField = (name, value) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = value;
+                form.appendChild(input);
             };
 
-            // Title
-            pdf.setFontSize(16);
-            pdf.setTextColor(218, 165, 32);
-            pdf.text('MIKE FILIP COACHING', 10, yPosition);
-            yPosition += 8;
-            pdf.setFontSize(12);
-            pdf.text('Formularz Zgłoszeniowy', 10, yPosition);
-            yPosition += 10;
+            // Add FormSubmit special fields
+            addField('_subject', 'Nowe zgłoszenie do Mike Filip Coaching');
+            addField('_replyto', document.querySelector('input[name="user_email"]')?.value || userEmail + '@example.com');
+            addField('_next', window.location.origin + window.location.pathname.replace(/[^/]*$/, 'thank-you.html'));
+            addField('_captcha', 'false');
 
-            // Data
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(10);
-            pdf.text(`Data: ${new Date().toLocaleDateString('pl-PL')}`, 10, yPosition);
-            yPosition += 10;
+            // Add form data
+            addField('firstName', data.basic.firstName);
+            addField('gender', data.basic.gender);
+            addField('age', data.basic.age);
+            addField('height', data.basic.height);
+            addField('weight', data.basic.weight);
+            addField('workMode', data.activity.workMode);
+            addField('sportActivity', data.activity.sportActivity);
+            addField('trainingType', data.activity.trainingType.join(', '));
+            addField('eveningActivity', data.activity.eveningActivity);
+            addField('weekendActivity', data.activity.weekendActivity);
+            addField('steps', data.activity.steps);
+            addField('goals', data.goals.join(', '));
+            addField('fatiguePreference', data.strength.fatiguePreference);
+            addField('strengthExperience', data.strength.experience);
+            addField('trainingGoal', data.strength.goal);
+            addField('trainingTime', data.strength.time);
+            addField('trainingTimeOfDay', data.strength.timeOfDay);
+            addField('totalTimeRequirement', data.strength.totalTimeRequirement);
+            addField('trainingDuration', data.strength.trainingDuration);
+            addField('totalTime', data.strength.totalTime);
+            addField('showerAtGym', data.strength.showerAtGym);
+            addField('commuteTime', data.strength.commuteTime);
+            addField('injuries', data.strength.injuries);
+            addField('pastInjuries', data.strength.pastInjuries);
+            addField('wakeupTime', data.sleep.wakeupTime);
+            addField('sleepHours', data.sleep.hours);
+            addField('sleepQuality', data.sleep.quality);
+            addField('fallAsleep', data.sleep.fallAsleep);
+            addField('morningWakeup', data.sleep.morningWakeup);
+            addField('snooze', data.sleep.snooze);
+            addField('sleepIssues', data.sleep.issues.join(', '));
+            addField('sleepFactors', data.sleep.factors.join(', '));
+            addField('firstMealTiming', data.meals.firstMealTiming);
+            addField('dietRestrictions', data.meals.restrictions.join(', '));
+            addField('proteinFocus', data.meals.proteinFocus);
+            addField('favoriteDishes', data.meals.favoriteDishes);
+            addField('postBreakfastFeel', data.meals.postBreakfastFeel.join(', '));
+            addField('postMainMealFeel', data.meals.postMainMealFeel.join(', '));
+            addField('energyLevel', data.wellbeing.energy);
+            addField('mood', data.wellbeing.mood);
+            addField('weekendDifference', data.wellbeing.weekendDifference);
+            addField('weekendDifferenceText', data.wellbeing.weekendDifferenceText);
+            addField('stressLevel', data.wellbeing.stress);
+            addField('motivation', data.wellbeing.motivation);
+            addField('symptoms', data.wellbeing.symptoms.join(', '));
+            addField('menstrualCycle', data.wellbeing.menstrualCycle);
+            addField('contraception', data.wellbeing.contraception);
+            addField('healthHistory', data.wellbeing.healthHistory);
+            addField('supplements', data.wellbeing.supplements);
+            addField('additionalNotes', data.wellbeing.additionalNotes);
+            addField('submissionDate', new Date().toLocaleDateString('pl-PL'));
 
-            // Basic Info
-            pdf.setFontSize(12);
-            pdf.setTextColor(218, 165, 32);
-            pdf.text('DANE PODSTAWOWE', 10, yPosition);
-            yPosition += 6;
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(10);
-            yPosition = addText(`Imię: ${data.basic.firstName || '-'}`, 10, yPosition);
-            yPosition = addText(`Płeć: ${data.basic.gender || '-'}`, 10, yPosition);
-            yPosition = addText(`Wiek: ${data.basic.age || '-'}`, 10, yPosition);
-            yPosition = addText(`Wzrost: ${data.basic.height || '-'} cm`, 10, yPosition);
-            yPosition = addText(`Waga: ${data.basic.weight || '-'} kg`, 10, yPosition);
-            if (data.basic.height && data.basic.weight) {
-                const bmi = (data.basic.weight / ((data.basic.height / 100) ** 2)).toFixed(1);
-                yPosition = addText(`BMI: ${bmi}`, 10, yPosition);
-            }
-            yPosition += 5;
-
-            // Activity
-            pdf.setFontSize(12);
-            pdf.setTextColor(218, 165, 32);
-            pdf.text('AKTYWNOŚĆ FIZYCZNA', 10, yPosition);
-            yPosition += 6;
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(10);
-            yPosition = addText(`Tryb pracy: ${data.activity.workMode || '-'}`, 10, yPosition);
-            yPosition = addText(`Aktywność sportowa: ${data.activity.sportActivity || '-'}`, 10, yPosition);
-            if (data.activity.trainingType.length > 0) {
-                yPosition = addText(`Typy treningu: ${data.activity.trainingType.join(', ')}`, 10, yPosition);
-            }
-            yPosition = addText(`Aktywność wieczorem: ${data.activity.eveningActivity || '-'}`, 10, yPosition);
-            yPosition = addText(`Aktywność w dni wolne: ${data.activity.weekendActivity || '-'}`, 10, yPosition);
-            yPosition = addText(`Średnia liczba kroków: ${data.activity.steps || '-'}`, 10, yPosition);
-            yPosition += 5;
-
-            // Goals
-            pdf.setFontSize(12);
-            pdf.setTextColor(218, 165, 32);
-            pdf.text('CELE', 10, yPosition);
-            yPosition += 6;
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(10);
-            if (data.goals.length > 0) {
-                yPosition = addText(`Wybrane cele: ${data.goals.join(', ')}`, 10, yPosition);
-            } else {
-                yPosition = addText('Cele: Nie wybrano', 10, yPosition);
-            }
-            yPosition += 5;
-
-            // Strength Training
-            pdf.setFontSize(12);
-            pdf.setTextColor(218, 165, 32);
-            pdf.text('TRENING SIŁOWY', 10, yPosition);
-            yPosition += 6;
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(10);
-            yPosition = addText(`Rodzaj zmęczenia: ${data.strength.fatiguePreference || '-'}`, 10, yPosition);
-            yPosition = addText(`Doświadczenie: ${data.strength.experience || '-'}`, 10, yPosition);
-            yPosition = addText(`Główny cel: ${data.strength.goal || '-'}`, 10, yPosition);
-            yPosition = addText(`Dostępny czas: ${data.strength.time || '-'}`, 10, yPosition);
-            yPosition = addText(`Preferowany czas: ${data.strength.timeOfDay || '-'}`, 10, yPosition);
-            if (data.strength.trainingDuration) {
-                yPosition = addText(`Czas treningu: ${data.strength.trainingDuration} min`, 10, yPosition);
-            }
-            if (data.strength.totalTime) {
-                const hours = Math.floor(data.strength.totalTime / 60);
-                const minutes = data.strength.totalTime % 60;
-                yPosition = addText(`Cały czas na siłownię: ${hours}h ${minutes}min`, 10, yPosition);
-            }
-            if (data.strength.showerAtGym) {
-                yPosition = addText(`Prysznic na siłowni: ${data.strength.showerAtGym}`, 10, yPosition);
-            }
-            if (data.strength.commuteTime) {
-                yPosition = addText(`Czas dojazdu: ${data.strength.commuteTime} min`, 10, yPosition);
-            }
-            if (data.strength.injuries) {
-                yPosition = addText(`Bieżące kontuzje/ograniczenia: ${data.strength.injuries}`, 10, yPosition);
-            }
-            if (data.strength.pastInjuries) {
-                yPosition = addText(`Przeszłe kontuzje/operacje: ${data.strength.pastInjuries}`, 10, yPosition);
-            }
-            yPosition += 5;
-
-            // Sleep
-            pdf.setFontSize(12);
-            pdf.setTextColor(218, 165, 32);
-            pdf.text('SEN I REGENERACJA', 10, yPosition);
-            yPosition += 6;
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(10);
-            yPosition = addText(`Godzina pobudki: ${data.sleep.wakeupTime || '-'}`, 10, yPosition);
-            yPosition = addText(`Średni czas snu: ${data.sleep.hours} h`, 10, yPosition);
-            yPosition = addText(`Jakość snu: ${data.sleep.quality || '-'}`, 10, yPosition);
-            yPosition = addText(`Zasypianie: ${data.sleep.fallAsleep || '-'}`, 10, yPosition);
-            yPosition = addText(`Wstawanie rano: ${data.sleep.morningWakeup || '-'}`, 10, yPosition);
-            yPosition = addText(`Drzemka po budziku: ${data.sleep.snooze || '-'}`, 10, yPosition);
-            if (data.sleep.issues.length > 0) {
-                yPosition = addText(`Problemy w nocy: ${data.sleep.issues.join(', ')}`, 10, yPosition);
-            }
-            if (data.sleep.factors.length > 0) {
-                yPosition = addText(`Czynniki wpływające: ${data.sleep.factors.join(', ')}`, 10, yPosition);
-            }
-            yPosition += 5;
-
-            // Meals
-            pdf.setFontSize(12);
-            pdf.setTextColor(218, 165, 32);
-            pdf.text('POSIŁKI', 10, yPosition);
-            yPosition += 6;
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(10);
-            yPosition = addText(`Czas pierwszego posiłku: ${data.meals.firstMealTiming || '-'}`, 10, yPosition);
-            if (data.meals.restrictions.length > 0) {
-                yPosition = addText(`Ograniczenia dietetyczne: ${data.meals.restrictions.join(', ')}`, 10, yPosition);
-            }
-            yPosition = addText(`Dbanie o białko: ${data.meals.proteinFocus || '-'}`, 10, yPosition);
-            if (data.meals.favoriteDishes) {
-                yPosition = addText(`Ulubione potrawy: ${data.meals.favoriteDishes}`, 10, yPosition);
-            }
-            if (data.meals.postBreakfastFeel.length > 0) {
-                yPosition = addText(`Samopoczucie po pierwszym posiłku: ${data.meals.postBreakfastFeel.join(', ')}`, 10, yPosition);
-            }
-            if (data.meals.postMainMealFeel.length > 0) {
-                yPosition = addText(`Samopoczucie po głównym posiłku: ${data.meals.postMainMealFeel.join(', ')}`, 10, yPosition);
-            }
-            yPosition += 5;
-
-            // Wellbeing
-            pdf.setFontSize(12);
-            pdf.setTextColor(218, 165, 32);
-            pdf.text('OGÓLNE SAMOPOCZUCIE', 10, yPosition);
-            yPosition += 6;
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(10);
-            yPosition = addText(`Poziom energii: ${data.wellbeing.energy || '-'}`, 10, yPosition);
-            yPosition = addText(`Nastrój: ${data.wellbeing.mood || '-'}`, 10, yPosition);
-            if (data.wellbeing.weekendDifference === 'Tak') {
-                yPosition = addText(`Różnica w dni wolne: ${data.wellbeing.weekendDifferenceText || '-'}`, 10, yPosition);
-            }
-            yPosition = addText(`Poziom stresu: ${data.wellbeing.stress}/10`, 10, yPosition);
-            yPosition = addText(`Motywacja do zmian: ${data.wellbeing.motivation || '-'}`, 10, yPosition);
-            if (data.wellbeing.symptoms.length > 0) {
-                yPosition = addText(`Objawy: ${data.wellbeing.symptoms.join(', ')}`, 10, yPosition);
-            }
-            if (data.wellbeing.menstrualCycle) {
-                yPosition = addText(`Regularne cykle miesiączkowe: ${data.wellbeing.menstrualCycle}`, 10, yPosition);
-            }
-            if (data.wellbeing.contraception) {
-                yPosition = addText(`Leki antykoncepcyjne: ${data.wellbeing.contraception}`, 10, yPosition);
-            }
-            if (data.wellbeing.healthHistory) {
-                yPosition = addText(`Historia zdrowotna: ${data.wellbeing.healthHistory}`, 10, yPosition);
-            }
-            if (data.wellbeing.supplements) {
-                yPosition = addText(`Suplementy/leki: ${data.wellbeing.supplements}`, 10, yPosition);
-            }
-            if (data.wellbeing.additionalNotes) {
-                yPosition = addText(`Uwagi dodatkowe: ${data.wellbeing.additionalNotes}`, 10, yPosition);
-            }
-
-            // Save PDF
-            const fileName = `Zgłoszenie-${data.basic.firstName || 'Klient'}-${new Date().toISOString().split('T')[0]}.pdf`;
-            pdf.save(fileName);
-
-            // Send email
-            sendEmailWithPDF(data.basic.firstName, userEmail, fileName);
-        }
-
-        function sendEmailWithPDF(userName, userEmail, fileName) {
-            // Send to admin email with user's email
-            const formData = new FormData();
-            formData.append('user_email', userEmail);
-            formData.append('user_name', userName);
-            formData.append('form_data', JSON.stringify(getFormData()));
-            formData.append('submission_date', new Date().toLocaleDateString('pl-PL'));
-
-            // Using FormSubmit.co service (free, no backend needed)
-            fetch('https://formsubmit.co/mikefilip.coach@gmail.com', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert(`Dziękujemy za wypełnienie formularza, ${userName}!\n\nPDF został wygenerowany i wysłany na adres:\nmikefilip.coach@gmail.com\n\nWkrótce skontaktujemy się z Tobą na: ${userEmail}`);
-                    if (confirm('Czy chcesz wypełnić nowy formularz?')) {
-                        resetForm();
-                    }
-                } else {
-                    throw new Error('Błąd wysyłania');
-                }
-            })
-            .catch(error => {
-                console.error('Błąd:', error);
-                alert(`Dziękujemy za wypełnienie formularza, ${userName}!\n\nPDF został wygenerowany: ${fileName}\n\nFormularz został zapisany. Wkrótce skontaktujemy się z Tobą na: ${userEmail}\n\nJeśli masz pytania, napisz na: mikefilip.coach@gmail.com`);
-                if (confirm('Czy chcesz wypełnić nowy formularz?')) {
-                    resetForm();
-                }
-            });
+            document.body.appendChild(form);
+            form.submit();
         }
 
         function resetForm() {
@@ -2259,16 +2093,49 @@
             showSection(1);
         }
 
-        function downloadPDF() {
-            const data = getFormData();
-            const content = generatePDFContent(data);
-            const element = document.createElement('a');
-            const file = new Blob([content], { type: 'text/plain' });
-            element.href = URL.createObjectURL(file);
-            element.download = `Zgłoszenie-${data.basic.firstName || 'Klient'}-${new Date().toISOString().split('T')[0]}.txt`;
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
+        function showThankYouPage() {
+            document.body.innerHTML = `
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 100vh;
+                    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                    padding: 20px;
+                    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+                    color: #e6e6f0;
+                    text-align: center;
+                ">
+                    <div style="max-width: 600px;">
+                        <h1 style="
+                            font-size: 48px;
+                            color: #daa520;
+                            margin: 0 0 20px 0;
+                            font-family: 'Cinzel', serif;
+                            letter-spacing: 1px;
+                        ">Dziękujemy!</h1>
+                        
+                        <p style="
+                            font-size: 18px;
+                            color: #e6e6f0;
+                            margin: 0 0 30px 0;
+                            line-height: 1.6;
+                        ">
+                            Twoje zgłoszenie zostało pomyślnie wysłane.<br>
+                            Wkrótce skontaktujemy się z Tobą, aby omówić Twoje cele i przygotować spersonalizowany plan treningowy.
+                        </p>
+                        
+                        <p style="
+                            font-size: 14px;
+                            color: #969696;
+                            margin: 0;
+                        ">
+                            Mike Filip Coaching
+                        </p>
+                    </div>
+                </div>
+            `;
         }
 
         function generatePDFContent(data) {
