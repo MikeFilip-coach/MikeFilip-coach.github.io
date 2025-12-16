@@ -621,17 +621,22 @@
             const heading = section.querySelector('h2, h3');
             if (heading) {
                 heading.addEventListener('click', () => {
-                    const parent = section.closest('section');
-            
-                    // Zamknij wszystkie inne rozwijane sekcje w tym samym kontenerze
-                    parent.querySelectorAll('.expandable-section').forEach(otherSection => {
-                        if (otherSection !== section) {
-                            otherSection.classList.remove('expanded');
-                        }
+                    document.querySelectorAll('.expandable-section').forEach(otherSection =>
+        {    
+                        otherSection.classList.remove('expanded');
                     });
+                    
+                    // Otwórz klikniętą sekcję
+                    section.classList.add('expanded');
             
-                    // Przełącz aktualną sekcję
-                    section.classList.toggle('expanded');
+                    // Gładkie przewinięcie do nagłówka sekcji
+                    const headingElement = section.querySelector('h2, h3');
+                    setTimeout(() => {
+                        headingElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 50);
                 });
             }
         });
