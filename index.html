@@ -610,8 +610,8 @@
         document.querySelectorAll('.expandable-section').forEach(section => {
             const heading = section.querySelector('h2, h3');
             if (heading) {
-                //heading.addEventListener('click', () => {
-                    //section.classList.toggle('expanded');
+                heading.addEventListener('click', () => {
+                    section.classList.toggle('expanded');
                 });
             }
         });
